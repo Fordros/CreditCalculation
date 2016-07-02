@@ -1,4 +1,4 @@
-package net.riverSoft;
+package net.riverSoft.domain.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,36 +19,24 @@ import javax.persistence.TemporalType;
 @Table(name = "payments")
 public class Payment implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 1110477664112656944L;
 	private Integer id;
-	private String contractNumber;
 	private Integer amount;
-	private Integer minimalAmount;
 	private Date datePayment;
-	private Contract contract;
+	private Credit credit;
 
 	public Payment() {
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PAY_ID", unique = true, nullable = false)
+	@Column(name = "ID", unique = true, nullable = false)
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@Column(name = "ACCOUNT_NUMBER")
-	public String getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
 	}
 
 	@Column(name = "AMOUNT")
@@ -71,19 +59,19 @@ public class Payment implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ACC_ID", referencedColumnName = "ACC_ID")
-	public Account getAccount() {
-		return account;
+	@JoinColumn(name = "CREDIT_ID", referencedColumnName = "CREDIT_ID")
+	public Credit getAccount() {
+		return credit;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setAccount(Credit credit) {
+		this.credit = credit;
 	}
 
 	@Override
 	public String toString() {
-		return "Payment{" + "acc='" + accountNumber + '\'' + ", amount='"
-				+ amount + '\'' + ", date='" + datePayment + '\'' + '}';
+		return "Payment{" + "id='" + id + '\'' + ", amount='" + amount + '\''
+				+ ", date='" + datePayment + '\'' + '}';
 	}
 
 }
