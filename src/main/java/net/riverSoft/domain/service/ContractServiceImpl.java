@@ -36,7 +36,7 @@ public class ContractServiceImpl {
 	}
 
 	@Transactional
-	public Object findByID(Integer id) throws ServiceException {
+	public Contract findByID(Integer id) throws ServiceException {
 		try {
 			return contractDaoImpl.findByID(id);
 		} catch (DaoException e) {

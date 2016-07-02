@@ -21,7 +21,6 @@ public class ContractDaoImpl extends GenericDAOImpl<Contract, Integer> {
 		return contract;
 	}
 
-	@Override
 	public Contract findByID(Integer id) throws DaoException {
 		return hibernateUtil.fetchById(id, Contract.class);
 	}
