@@ -1,4 +1,4 @@
-package net.riverSoft.domain.service;
+package net.riverSoft.services;
 
 import java.util.List;
 
@@ -8,9 +8,11 @@ import net.riverSoft.exception.DaoException;
 import net.riverSoft.exception.ServiceException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-public class ContractServiceImpl {
+@Service("contractService")
+public class ContractServiceImpl implements ContractService {
 
 	@Autowired
 	ContractDaoImpl contractDaoImpl;
@@ -38,7 +40,7 @@ public class ContractServiceImpl {
 	@Transactional
 	public Contract findByID(Integer id) throws ServiceException {
 		try {
-			return contractDaoImpl.findByID(id);
+			return (Contract) contractDaoImpl.findByID(id);
 		} catch (DaoException e) {
 			throw new ServiceException(
 					"Error when trying to find contract by id", e);

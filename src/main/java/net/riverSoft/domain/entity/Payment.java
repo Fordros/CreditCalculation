@@ -59,7 +59,7 @@ public class Payment implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CREDIT_ID", referencedColumnName = "CREDIT_ID")
+	@JoinColumn(name = "CREDIT_ID", referencedColumnName = "ID")
 	public Credit getAccount() {
 		return credit;
 	}

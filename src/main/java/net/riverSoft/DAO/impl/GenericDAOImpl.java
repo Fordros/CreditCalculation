@@ -7,7 +7,9 @@ import net.riverSoft.DAO.GenericDao;
 import net.riverSoft.util.HibernateUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository("genericDAO")
 public abstract class GenericDAOImpl<T, ID extends Serializable> implements
 		GenericDao<T, ID> {
 
