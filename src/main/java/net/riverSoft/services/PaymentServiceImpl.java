@@ -3,7 +3,7 @@ package net.riverSoft.services;
 import java.util.List;
 
 import net.riverSoft.DAO.impl.PaymentDaoImpl;
-import net.riverSoft.domain.entity.Payment;
+import net.riverSoft.model.Payment;
 import net.riverSoft.exception.DaoException;
 import net.riverSoft.exception.ServiceException;
 

@@ -5,36 +5,12 @@
 	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
+    <!-- Database Configuration -->
+    <import resource="../database/DataSource.xml"/>
+    <import resource="../database/Hibernate.xml"/>
 
-
+    <!-- Auto scan the components -->
   <context:component-scan base-package="net.riverSoft.*" />
-    
-  <tx:annotation-driven/>
-  
- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-    <property name="driverClassName" value="org.postgresql.Driver" />
-    <property name="url" value="jdbc:postgresql://localhost:5432/postgres" />
-    <property name="username" value="postgres" />
-    <property name="password" value="sa62298" />
-  </bean>
-
-  <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-    <property name="dataSource" ref="dataSource"></property>
-     <property name="annotatedClasses">
-            <list>
-                <value>net.riverSoft.domain.entity.Contract</value>
-                <value>net.riverSoft.domain.entity.Credit</value>
-                <value>net.riverSoft.domain.entity.Payment</value>
-            </list>
-        </property>
-    <property name="hibernateProperties">
-      <props>
-        <prop 
-         key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
-        <prop key="hibernate.show_sql">true</prop>
-      </props>
-    </property>
-  </bean>
   
   <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager" 
     p:sessionFactory-ref="sessionFactory">

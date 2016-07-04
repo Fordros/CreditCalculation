@@ -2,7 +2,7 @@ package net.riverSoft.services;
 
 import java.util.List;
 
-import net.riverSoft.domain.entity.Contract;
+import net.riverSoft.model.Contract;
 import net.riverSoft.exception.ServiceException;
 
 public interface ContractService {

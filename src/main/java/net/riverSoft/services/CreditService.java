@@ -2,7 +2,7 @@ package net.riverSoft.services;
 
 import java.util.List;
 
-import net.riverSoft.domain.entity.Credit;
+import net.riverSoft.model.Credit;
 import net.riverSoft.exception.ServiceException;
 
 public interface CreditService {

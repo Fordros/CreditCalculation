@@ -1,4 +1,4 @@
-package net.riverSoft.domain.entity;
+package net.riverSoft.model;
 
 import java.io.Serializable;
 import java.util.Date;

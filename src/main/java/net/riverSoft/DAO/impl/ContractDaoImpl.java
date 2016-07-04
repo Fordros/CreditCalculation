@@ -1,6 +1,6 @@
 package net.riverSoft.DAO.impl;
 
-import net.riverSoft.domain.entity.Contract;
+import net.riverSoft.model.Contract;
 import net.riverSoft.exception.DaoException;
 import net.riverSoft.util.HibernateUtil;
 
