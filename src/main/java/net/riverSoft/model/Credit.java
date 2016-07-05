@@ -5,7 +5,19 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "credit")
@@ -29,7 +41,7 @@ public class Credit implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", nullable = false, insertable = true, updatable = true)
+	@Column(name = "ID_CREDIT", nullable = false, insertable = true, updatable = true)
 	public Integer getId() {
 		return id;
 	}
@@ -43,8 +55,9 @@ public class Credit implements Serializable {
 		return creditLimit;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_CONTRACT")
+	@ManyToOne
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinColumn(name = "ID_CONTRACT", referencedColumnName = "id_contract")
 	public Contract getContract() {
 		return contract;
 	}
@@ -103,6 +116,7 @@ public class Credit implements Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "credit")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	public Set<Payment> getPayments() {
 		return this.payments;
 	}

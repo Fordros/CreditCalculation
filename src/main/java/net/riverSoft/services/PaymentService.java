@@ -2,14 +2,14 @@ package net.riverSoft.services;
 
 import java.util.List;
 
-import net.riverSoft.model.Payment;
 import net.riverSoft.exception.ServiceException;
+import net.riverSoft.model.Payment;
 
 public interface PaymentService {
 
-	public Integer save(Payment payment) throws ServiceException;
+	public void save(Payment payment) throws ServiceException;
 
-	public Payment merge(Payment payment) throws ServiceException;
+	public void merge(Payment payment) throws ServiceException;
 
 	public void delete(Payment payment) throws ServiceException;
 

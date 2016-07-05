@@ -2,14 +2,14 @@ package net.riverSoft.services;
 
 import java.util.List;
 
-import net.riverSoft.model.Credit;
 import net.riverSoft.exception.ServiceException;
+import net.riverSoft.model.Credit;
 
 public interface CreditService {
 
-	public Integer save(Credit credit) throws ServiceException;
+	public void save(Credit credit) throws ServiceException;
 
-	public Credit merge(Credit credit) throws ServiceException;
+	public void merge(Credit credit) throws ServiceException;
 
 	public void delete(Credit credit) throws ServiceException;
 

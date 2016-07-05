@@ -4,35 +4,40 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.riverSoft.DAO.GenericDao;
-import net.riverSoft.util.HibernateUtil;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
-@Repository("genericDAO")
 public abstract class GenericDAOImpl<T, ID extends Serializable> implements
 		GenericDao<T, ID> {
 
 	@Autowired
-	private HibernateUtil hibernateUtil;
+	private SessionFactory sessionFactory;
 
-	public Integer save(T entity) {
-		return (Integer) hibernateUtil.create(entity);
+	protected Session getSession() {
+		return sessionFactory.getCurrentSession();
 	}
 
-	public T merge(T entity) {
-		return hibernateUtil.update(entity);
+	public void save(T entity) {
+		getSession().save(entity);
+	}
+
+	public void merge(T entity) {
+		getSession().update(entity);
 	}
 
 	public void delete(T entity) {
-		hibernateUtil.delete(entity);
+		getSession().delete(entity);
 	}
 
-	public T findByID(Class clazz, Integer id) {
-		return (T) hibernateUtil.fetchById(id, clazz);
+	public T findById(Serializable id, Class<T> entityClass) {
+		return (T) getSession().get(entityClass, id);
 	}
 
-	public List<T> findAll(Class clazz) {
-		return hibernateUtil.fetchAll(clazz);
+	@SuppressWarnings("unchecked")
+	public List<T> findAll(Class<T> entityClass) {
+		return getSession().createQuery(" FROM " + entityClass.getName())
+				.list();
 	}
 }

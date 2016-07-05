@@ -7,13 +7,13 @@ import net.riverSoft.exception.DaoException;
 
 public interface GenericDao<T, ID extends Serializable> {
 
-	public Integer save(T entity) throws DaoException;
+	public void save(T entity) throws DaoException;
 
-	public T merge(T entity) throws DaoException;
+	public void merge(T entity) throws DaoException;
 
 	public void delete(T entity) throws DaoException;
 
-	public List<?> findAll(Class<?> clazz) throws DaoException;
+	public List<T> findAll(Class<T> clazz) throws DaoException;
 
 	public T findByID(Integer id) throws DaoException;
 

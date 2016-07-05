@@ -16,6 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "contract")
 public class Contract implements Serializable {
@@ -31,7 +34,7 @@ public class Contract implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", nullable = false, insertable = true, updatable = true)
+	@Column(name = "ID_CONTRACT", nullable = false, insertable = true, updatable = true)
 	public Integer getId() {
 		return id;
 	}
@@ -60,6 +63,7 @@ public class Contract implements Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contract")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	public Set<Credit> getCredits() {
 		return credits;
 	}

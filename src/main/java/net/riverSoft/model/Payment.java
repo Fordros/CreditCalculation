@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "payments")
@@ -30,7 +32,7 @@ public class Payment implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", unique = true, nullable = false)
+	@Column(name = "ID_PAYMENT", unique = true, nullable = false)
 	public Integer getId() {
 		return id;
 	}
@@ -58,13 +60,14 @@ public class Payment implements Serializable {
 		this.datePayment = datePayment;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CREDIT_ID", referencedColumnName = "ID")
-	public Credit getAccount() {
+	@ManyToOne
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinColumn(name = "CREDIT_ID", referencedColumnName = "ID_CREDIT")
+	public Credit getCredit() {
 		return credit;
 	}
 
-	public void setAccount(Credit credit) {
+	public void setCredit(Credit credit) {
 		this.credit = credit;
 	}
 
