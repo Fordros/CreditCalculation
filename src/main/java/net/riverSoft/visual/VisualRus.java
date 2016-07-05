@@ -21,7 +21,7 @@ public class VisualRus implements Visual {
 
 	@Override
 	public String MessageLimitTerminationDate() {
-		return "Введите количество месяцев желаемое для погашения кредитного лимита";
+		return "Введите желаемое количество месяцев для погашения кредитного лимита";
 	}
 
 	@Override

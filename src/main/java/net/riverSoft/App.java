@@ -3,27 +3,24 @@ package net.riverSoft;
 import java.util.Date;
 import java.util.Scanner;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import net.riverSoft.exception.ServiceException;
 import net.riverSoft.model.Contract;
 import net.riverSoft.model.Credit;
 import net.riverSoft.services.ContractService;
 import net.riverSoft.services.CreditService;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 public class App {
 
 	public static void main(String[] args) {
 
 		Scanner scanner = new Scanner(System.in);
-		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"spring/spring.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring/spring.xml");
 
-		ContractService contractService = (ContractService) context
-				.getBean("contractService");
-		CreditService creditService = (CreditService) context
-				.getBean("creditService");
+		ContractService contractService = (ContractService) context.getBean("contractService");
+		CreditService creditService = (CreditService) context.getBean("creditService");
 
 		Contract contract = new Contract();
 		System.out.println("Введите номер договора");
@@ -49,6 +46,8 @@ public class App {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		scanner.close();
 
 	}
 
