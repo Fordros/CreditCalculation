@@ -2,7 +2,7 @@ package net.riverSoft.visual;
 
 import java.util.List;
 
-public class VisualEng implements Visual {
+public class VisualEn implements Visual {
 
 	@Override
 	public String MessageWelcome() {

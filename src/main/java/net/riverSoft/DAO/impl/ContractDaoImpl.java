@@ -12,7 +12,7 @@ public class ContractDaoImpl extends GenericDAOImpl<Contract, Integer>
 
 	public Contract findByContractNumber(String contractNumber) {
 		Contract contract = null;
-		String sql = "SELECT a FROM university_groups a WHERE a.group_number = "
+		String sql = "SELECT a FROM credit a WHERE a.credit_number = "
 				+ contractNumber;
 		contract = (Contract) getSession().createSQLQuery(sql);
 		return contract;
