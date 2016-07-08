@@ -1,5 +1,7 @@
 package net.riverSoft.BO;
 
+import net.riverSoft.model.Credit;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -16,47 +18,47 @@ public class CreditProposalImpl implements CreditProposal {
 	private final BigDecimal totalCredComm; // итоговая комиссия
 
 	/**
+	 * Конструктор кредитного предложения.
 	 *
-	 *
-	 * @param application
+	 * @param creditOrder
 	 *            заявка на кредит
 	 * @param creditOffer
 	 *            оффер на кредит
 	 */
-	public CreditProposalImpl(final Credit application,
+	public CreditProposalImpl(final Credit creditOrder,
 			final CreditOffer creditOffer) {
 
 		// 1. Проверка заполненности свойств заявки на кредит
-		checkCreditApplication(application);
+		checkCreditApplication(creditOrder);
 
 		// 2. Заполняем свойства предложения
-		this.creditAmount = application.getAmount();
+		this.creditAmount = creditOrder.getAmount();
 		this.initCredComm = FinUtil.calcInitialCommission(
-				application.getAmount(), creditOffer);
+				creditOrder.getAmount(), creditOffer);
 
 		BigDecimal monthlyCommission = FinUtil.calcMonthlyCommission(
-				application.getAmount(), creditOffer);
+				creditOrder.getAmount(), creditOffer);
 		this.totalCredComm = this.initCredComm.add(monthlyCommission
-				.multiply(new BigDecimal(application.getDurationInMonths())));
-		switch (application.getPaymentType()) {
+				.multiply(new BigDecimal(creditOrder.getDurationInMonths())));
+		switch (creditOrder.getPaymentType()) {
 		case ANNUITY: {
 			this.payments = FinUtil.calcAnnuityPayments(
-					application.getAmount(), application.getDurationInMonths(),
-					application.getStartDate(), creditOffer.getRate(),
+					creditOrder.getAmount(), creditOrder.getDurationInMonths(),
+					creditOrder.getStartDate(), creditOffer.getRate(),
 					monthlyCommission);
 			break;
 
 		}
 		case DIFFERENTIAL: {
 			this.payments = FinUtil.calcDifferentialPayments(
-					application.getAmount(), application.getDurationInMonths(),
-					application.getStartDate(), creditOffer.getRate(),
+					creditOrder.getAmount(), creditOrder.getDurationInMonths(),
+					creditOrder.getStartDate(), creditOffer.getRate(),
 					monthlyCommission);
 			break;
 		}
 		default:
 			throw new UnsupportedOperationException(
-					application.getPaymentType() + " type is not supported");
+					creditOrder.getPaymentType() + " type is not supported");
 		}
 
 		this.totalPayment = FinUtil.calcTotalAmount(payments).add(
@@ -96,23 +98,23 @@ public class CreditProposalImpl implements CreditProposal {
 	/**
 	 * Проверяет заполненность свойств заявки на кредит.
 	 *
-	 * @param application
+	 * @param creditOrder
 	 *            заявка на кредит.
 	 * @throws IllegalArgumentException
 	 *             в случае, когда параметры не заполнены.
 	 */
-	private void checkCreditApplication(final Credit application) {
-		if (application.getPaymentType() == null) {
+	private void checkCreditApplication(final Credit creditOrder) {
+		if (creditOrder.getPaymentType() == null) {
 			throw new IllegalArgumentException(
-					"Credit application must have non-null PaymentType param.");
+					"Credit creditOrder must have non-null paymentType param.");
 		}
-		if (application.getDurationInMonths() == null) {
+		if (creditOrder.getDurationInMonths() == null) {
 			throw new IllegalArgumentException(
-					"Credit application must have non-null duration in months param.");
+					"Credit creditOrder must have non-null duration in months param.");
 		}
-		if (application.getStartDate() == null) {
+		if (creditOrder.getStartDate() == null) {
 			throw new IllegalArgumentException(
-					"Credit application must have non-null start date param.");
+					"Credit creditOrder must have non-null start date param.");
 		}
 	}
 }

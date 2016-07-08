@@ -1,136 +1,129 @@
 package net.riverSoft.model;
 
-import java.io.Serializable;
+import net.riverSoft.BO.*;
+import net.riverSoft.model.Payment;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+/**
+ * Реализация заявки на кредит.
+ */
 
 @Entity
 @Table(name = "credit")
-public class Credit implements Serializable {
+public class Credit {
 
-	private static final long serialVersionUID = -2234292491687066195L;
 	private Integer id;
-	private Contract contract;
-	private Integer creditLimit; // начальная сумма КЛ
-	private Integer decreaseAmount; // сумма уменьшения кредитного лимита
-	private Date limitTerminationDate; // дата окончания кредитного лимита
-	private Date limitDecreaseDate; // дата уменьшения кредитного лимита
-	private Integer percentDebtDue; // процентная ставка на срочную
-									// задолженность (тело КЛ)
-	private Integer percentPastDue; // процентная ставка на просроченную
-									// задолженность (несанкционированный овер)
-	private Set<Payment> payments = new HashSet<>();
+    private String contractNumber;
+	private BigDecimal amount; // размер кредита
+	private String currency; // валюта кредита (ISO 4217)
+	private CreditPaymentType paymentType; // тип платежа (аннуитет, дифф.)
+	private Integer durationInMonths; // срок кредита в месяцах
+	private Date startDate; // дата получения кредита
+    private Set<Payment> payments = new HashSet<>();
 
-	public Credit() {
+    public Credit() {
+    }
+
+    public Credit(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_CREDIT", nullable = false, insertable = true, updatable = true)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Column(name = "CONTRACT_NUMBER", unique = true, nullable = false, length = 50)
+    public String getContractNumber() {
+        return contractNumber;
+    }
+
+    public void setContractNumber(String contractNumber) {
+        this.contractNumber = contractNumber;
+    }
+
+    @Column(name = "CREDIT_AMOUNT", unique = false, nullable = false, length = 13)
+	public BigDecimal getAmount() {
+		return amount;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_CREDIT", nullable = false, insertable = true, updatable = true)
-	public Integer getId() {
-		return id;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    @Column(name = "CURRENCY",  length = 10)
+	public String getCurrency() {
+		return currency;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public Credit setCurrency(final String currency) {
+		this.currency = currency;
+		return this;
 	}
 
-	@Column(name = "CREDIT_LIMIT", unique = false, nullable = false, length = 13)
-	public Integer getCreditLimit() {
-		return creditLimit;
+    @Column(name = "CREDIT_PAYMENT_TYPE",  length = 15)
+	public CreditPaymentType getPaymentType() {
+		return paymentType;
 	}
 
-	@ManyToOne
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinColumn(name = "ID_CONTRACT", referencedColumnName = "id_contract")
-	public Contract getContract() {
-		return contract;
+	public Credit setPaymentType(CreditPaymentType paymentType) {
+		this.paymentType = paymentType;
+		return this;
 	}
 
-	public void setContract(Contract contract) {
-		this.contract = contract;
+    @Column(name = "DURATION_MONTHS",  length = 5)
+	public Integer getDurationInMonths() {
+		return durationInMonths;
 	}
 
-	public void setCreditLimit(Integer creditLimit) {
-		this.creditLimit = creditLimit;
+	public Credit setDurationInMonths(Integer durationInMonths) {
+		this.durationInMonths = durationInMonths;
+		return this;
 	}
 
-	@Column(name = "DATE_END", unique = false, nullable = false)
-	public Date getLimitTerminationDate() {
-		return limitTerminationDate;
+    @Column(name = "START_DATE")
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setLimitTerminationDate(Date limitTerminationDate) {
-		this.limitTerminationDate = limitTerminationDate;
+	public Credit setStartDate(final Date startDate) {
+		this.startDate = startDate;
+		return this;
 	}
 
-	@Column(name = "DATE_DECREASE", unique = false, nullable = false)
-	public Date getLimitDecreaseDate() {
-		return limitDecreaseDate;
-	}
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "credit")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public Set<Payment> getPayments() {
+        return payments;
+    }
 
-	public void setLimitDecreaseDate(Date limitDecreaseDate) {
-		this.limitDecreaseDate = limitDecreaseDate;
-	}
+    public void setPayments(Set<Payment> payments) {
+        this.payments = payments;
+    }
 
-	@Column(name = "PERCENT_DEBIT_DUE", unique = false, nullable = false)
-	public Integer getPercentDebtDue() {
-		return percentDebtDue;
-	}
 
-	public void setPercentDebtDue(Integer percentDebtDue) {
-		this.percentDebtDue = percentDebtDue;
-	}
-
-	@Column(name = "PERCENT_PAST_DUE", unique = false, nullable = false)
-	public Integer getPercentPastDue() {
-		return percentPastDue;
-	}
-
-	public void setPercentPastDue(Integer percentPastDue) {
-		this.percentPastDue = percentPastDue;
-	}
-
-	@Column(name = "DECREASE_AMOUNT")
-	public Integer getDecreaseAmount() {
-		return decreaseAmount;
-	}
-
-	public void setDecreaseAmount(Integer limitDecrease) {
-		this.decreaseAmount = limitDecrease;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "credit")
-	@LazyCollection(LazyCollectionOption.FALSE)
-	public Set<Payment> getPayments() {
-		return this.payments;
-	}
-
-	public void setPayments(Set<Payment> payments) {
-		this.payments = payments;
-	}
-
-	@Override
-	public String toString() {
-		return "Credit{" + "id='" + id + '\'' + ", credit limit='"
-				+ creditLimit + '\'' + ", date end='" + limitTerminationDate
-				+ '\'' + ", date decrease='" + limitDecreaseDate + '\''
-				+ ", % limit='" + percentDebtDue + '\'' + ", % overdraft='"
-				+ percentPastDue + '\'' + '}';
-	}
+    @Override
+    public String toString() {
+        return "Credit{"
+                + "id='" + id + '\''
+                + ", credit limit='" + amount + '\''
+                + ", currency='" + currency + '\''
+                + ", start date='" + startDate + '\''
+                + ", paymentType='" + paymentType + '\''
+                + ", durationInMonths='" + durationInMonths + '\''
+                + '}';
+    }
 }

@@ -1,13 +1,15 @@
+package net.riverSoft.BO;
+
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import net.riverSoft.BO.Credit;
 import net.riverSoft.BO.CreditPayment;
 import net.riverSoft.BO.CreditProposal;
+import net.riverSoft.model.Credit;
 
 
-public class TestUtil {
+public class PrintUtil {
 
 	public static void printProposal(CreditProposal proposal) {
 

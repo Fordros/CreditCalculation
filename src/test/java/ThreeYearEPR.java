@@ -2,8 +2,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
-import net.riverSoft.BO.Credit;
-import net.riverSoft.BO.CreditImpl;
+import net.riverSoft.model.Credit;
 import net.riverSoft.BO.CreditOffer;
 import net.riverSoft.BO.CreditOfferImpl;
 import net.riverSoft.BO.CreditPaymentType;
@@ -24,7 +23,7 @@ public class ThreeYearEPR {
 				.setMonthlyCommissionPercent(new BigDecimal("0.005"))
 				.setMonthlyCommissionAmount(new BigDecimal("100"));
 
-		Credit app = new CreditImpl(new BigDecimal(
+		Credit app = new Credit(new BigDecimal(
 				"300000")).setPaymentType(CreditPaymentType.ANNUITY)
 				.setDurationInMonths(36);
 

@@ -1,11 +1,7 @@
 import java.math.BigDecimal;
 
-import net.riverSoft.BO.Credit;
-import net.riverSoft.BO.CreditImpl;
-import net.riverSoft.BO.CreditOffer;
-import net.riverSoft.BO.CreditOfferImpl;
-import net.riverSoft.BO.CreditPaymentType;
-import net.riverSoft.BO.CreditProposal;
+import net.riverSoft.BO.*;
+import net.riverSoft.model.Credit;
 
 import org.junit.Test;
 
@@ -14,7 +10,7 @@ public class WithoutBanksCalcTest {
 
 	@Test
 	public void withoutBanksTest() {
-		Credit credit = new CreditImpl(new BigDecimal("1000"));
+		Credit credit = new Credit(new BigDecimal("1000"));
 		credit.setDurationInMonths(12);
 		credit.setPaymentType(CreditPaymentType.DIFFERENTIAL);
 
@@ -22,6 +18,6 @@ public class WithoutBanksCalcTest {
 		offer.setRate(new BigDecimal("0.1"));
 
 		CreditProposal proposal = offer.calculateProposal(credit);
-		TestUtil.printProposal(proposal);
+		PrintUtil.printProposal(proposal);
 	}
 }

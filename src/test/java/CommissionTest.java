@@ -2,13 +2,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
-import net.riverSoft.BO.Constants;
-import net.riverSoft.BO.Credit;
-import net.riverSoft.BO.CreditImpl;
-import net.riverSoft.BO.CreditOffer;
-import net.riverSoft.BO.CreditOfferImpl;
-import net.riverSoft.BO.CreditPaymentType;
-import net.riverSoft.BO.CreditProposal;
+import net.riverSoft.BO.*;
+import net.riverSoft.model.Credit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +19,7 @@ public class CommissionTest {
 	public void setUp() {
 		BigDecimal amount = new BigDecimal(100000)
 				.setScale(Constants.OUTPUT_AMOUNT_SCALE);
-		application = new CreditImpl(amount);
+		application = new Credit(amount);
 		application.setDurationInMonths(12);
 
 		offer = new CreditOfferImpl();
@@ -43,11 +38,11 @@ public class CommissionTest {
 	@Test
 	public void annuityCommissionTest() {
 		application.setPaymentType(CreditPaymentType.ANNUITY);
-		TestUtil.printApplication(application);
+		PrintUtil.printApplication(application);
 		CreditProposal proposal = offer.calculateProposal(application);
 		assertEquals(proposal.getEffectiveRate().setScale(4, BigDecimal.ROUND_HALF_UP), (new BigDecimal("0.5068")));
 
-		TestUtil.printProposal(proposal);
+		PrintUtil.printProposal(proposal);
 	}
 
 	@Test
@@ -55,6 +50,6 @@ public class CommissionTest {
 		application.setPaymentType(CreditPaymentType.DIFFERENTIAL);
 		CreditProposal proposal = offer.calculateProposal(application);
 		assertEquals(proposal.getEffectiveRate().setScale(4, BigDecimal.ROUND_HALF_UP), new BigDecimal("0.5152"));
-		TestUtil.printProposal(proposal);
+		PrintUtil.printProposal(proposal);
 	}
 }

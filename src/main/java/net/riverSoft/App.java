@@ -1,64 +1,63 @@
 package net.riverSoft;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Scanner;
 
-import net.riverSoft.BO.Credit;
-import net.riverSoft.BO.CreditImpl;
-import net.riverSoft.BO.CreditOffer;
-import net.riverSoft.BO.CreditOfferImpl;
-import net.riverSoft.BO.CreditPaymentType;
-import net.riverSoft.BO.CreditProposal;
-import net.riverSoft.BO.CreditProposalImpl;
+import net.riverSoft.BO.*;
+import net.riverSoft.exception.ServiceException;
+import net.riverSoft.model.Credit;
+
+import net.riverSoft.services.CreditService;
+import net.riverSoft.model.visual.Visual;
+import net.riverSoft.model.visual.VisualUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
 
 	public static void main(String[] args) {
 
-		// Scanner scanner = new Scanner(System.in);
-		// ApplicationContext context = new
-		// ClassPathXmlApplicationContext("spring/spring.xml");
-		//
-		// ContractService contractService = (ContractService)
-		// context.getBean("contractService");
-		// CreditService creditService = (CreditService)
-		// context.getBean("creditService");
-		//
-		// Contract contract = new Contract();
-		// System.out.println("Введите номер договора");
-		// contract.setContractNumber(scanner.next());
-		// contract.setContractDate(new Date());
-		//
-		// Credit credit = new Credit();
-		// credit.setContract(contract);
-		// System.out.println("Введите желаемую сумму кредита");
-		// credit.setCreditLimit(scanner.nextInt());
-		// credit.setDecreaseAmount(10);
-		// credit.setPercentDebtDue(20);
-		// credit.setPercentPastDue(60);
-		// credit.setLimitDecreaseDate(new Date());
-		// System.out.println("Введите количество месяцев использования кредита");
-		// System.out.println(scanner.nextInt());
-		// credit.setLimitTerminationDate(new Date());
-		//
-		// try {
-		// contractService.save(contract);
-		// creditService.save(credit);
-		// } catch (ServiceException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		//
-		// scanner.close();
+		 Scanner scanner = new Scanner(System.in);
+		 ApplicationContext context = new
+				 ClassPathXmlApplicationContext("spring/spring.xml");
 
-		CreditOffer creditOffer = new CreditOfferImpl();
-		Credit credit = new CreditImpl(
-				BigDecimal.valueOf(10000)).setPaymentType(
-				CreditPaymentType.ANNUITY).setDurationInMonths(12);
-		creditOffer.calculateProposal(credit);
-		CreditProposal creditProposal = new CreditProposalImpl(
-				credit, creditOffer);
+		 CreditService creditService = (CreditService)
+		 context.getBean("creditService");
 
-		System.out.println(creditProposal.getPayments());
+        CreditOffer offer = new CreditOfferImpl();
+        offer.setRate(new BigDecimal("0.2500"));
+
+        Credit credit = new Credit();
+
+        System.out.println("Для выбора языка введите номер (1 - En, 2 - Ru, 3 - Ua)");
+        Visual visual = VisualUtil.selectLang(scanner.nextInt());
+        visual.MessageWelcome();
+
+
+        visual.MessageContractNumber();
+        credit.setContractNumber(scanner.next());
+        visual.MessageCreditLimit();
+        credit.setAmount(scanner.nextBigDecimal());
+        visual.MessageLimitTerminationDate();
+        credit.setDurationInMonths(scanner.nextInt());
+        credit.setStartDate(new Date());
+        credit.setPaymentType(CreditPaymentType.DIFFERENTIAL);
+
+        CreditProposal proposal = offer.calculateProposal(credit);
+        visual.ShowPaymentGrid();
+        PrintUtil.printProposal(proposal);
+
+		 try {
+		 creditService.save(credit);
+		 } catch (ServiceException e) {
+		    e.printStackTrace();
+		 }
+
+		 scanner.close();
+
+
 	}
 
 }

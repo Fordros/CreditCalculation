@@ -60,4 +60,13 @@ public class CreditServiceImpl implements CreditService {
 					"Error when trying to find credit by id", e);
 		}
 	}
+
+	public Credit findByContractNumber(String contractNumber) throws ServiceException{
+		try {
+			return creditDaoImpl.findByContractNumber(contractNumber);
+		} catch (DaoException e) {
+			throw new ServiceException(
+					"Error when trying to find credit by contract number", e);
+		}
+	}
 }

@@ -17,4 +17,6 @@ public interface CreditDao {
 
 	public Credit findByID(Integer id) throws DaoException;
 
+	public Credit findByContractNumber(String contractNumber) throws DaoException;
+
 }

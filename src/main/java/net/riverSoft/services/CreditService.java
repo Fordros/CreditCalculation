@@ -17,4 +17,6 @@ public interface CreditService {
 
 	public Credit findByID(Integer id) throws ServiceException;
 
+	public Credit findByContractNumber(String contractNumber) throws ServiceException;
+
 }

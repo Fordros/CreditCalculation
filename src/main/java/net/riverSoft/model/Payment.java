@@ -17,6 +17,9 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+
+
+
 @Entity
 @Table(name = "payments")
 public class Payment implements Serializable {
@@ -62,7 +65,7 @@ public class Payment implements Serializable {
 
 	@ManyToOne
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinColumn(name = "CREDIT_ID", referencedColumnName = "ID_CREDIT")
+	@JoinColumn(name = "ID_CREDIT", referencedColumnName = "ID_CREDIT")
 	public Credit getCredit() {
 		return credit;
 	}
