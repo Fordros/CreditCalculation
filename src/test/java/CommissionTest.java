@@ -3,6 +3,7 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigDecimal;
 
 import net.riverSoft.BO.*;
+import net.riverSoft.BO.PrintUtil;
 import net.riverSoft.model.Credit;
 
 import org.junit.Before;

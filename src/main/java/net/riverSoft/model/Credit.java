@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Реализация заявки на кредит.
+ * Сущность кредита.
  */
 
 @Entity

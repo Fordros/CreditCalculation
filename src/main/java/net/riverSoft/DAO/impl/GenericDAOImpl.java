@@ -9,9 +9,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * Реализация слоя работы с БД (CRUD операции для кредита)
+ */
 public abstract class GenericDAOImpl<T, ID extends Serializable> implements
 		GenericDao<T, ID> {
-
+    /**
+     * Создание сесии ложим на spring
+     */
 	@Autowired
 	private SessionFactory sessionFactory;
 

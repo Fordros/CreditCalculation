@@ -1,0 +1,11 @@
+CREATE TABLE public.payments
+(
+  id_payment integer NOT NULL DEFAULT nextval('payments_id_payment_seq'::regclass),
+  amount numeric,
+  date_payment timestamp without time zone,
+  id_credit integer,
+  CONSTRAINT payments_pkey PRIMARY KEY (id_payment),
+  CONSTRAINT fk_payment_credit FOREIGN KEY (id_credit)
+      REFERENCES public.credit (id_credit) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)

@@ -6,6 +6,9 @@ import net.riverSoft.model.Payment;
 
 import org.springframework.stereotype.Repository;
 
+/**
+ * Реализация слоя работы с БД (CRUD операции для платежей)
+ */
 @Repository("paymentDAO")
 public class PaymentDaoImpl extends GenericDAOImpl<Payment, Integer> implements
 		PaymentDao {

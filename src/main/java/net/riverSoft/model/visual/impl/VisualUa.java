@@ -1,32 +1,41 @@
 package net.riverSoft.model.visual.impl;
 
 import net.riverSoft.model.visual.Visual;
-
+/**
+ * Реализация украинского языка
+ */
 public class VisualUa implements Visual {
 
-	@Override
-	public void MessageWelcome() {
+	public void WelcomeMessage() {
 		System.out.println("Программа розрахунку кредитної ставки");
 	}
 
-	@Override
-	public void MessageContractNumber() {
+	public void ContractNumberMessage() {
 		System.out.println("Введіть номер договору");
 	}
 
-	@Override
-	public void MessageCreditLimit() {
+	public void AmountLimitMessage() {
 		System.out.println("Введіть бажану суму кредитного ліміту");
 	}
 
-	@Override
-	public void MessageLimitTerminationDate() {
-		System.out.println("Введіть бажаний срок виплати кредиту в м!сяць");
+	public void LimitTerminationDateMessage() {
+		System.out.println("Введіть бажаний срок виплати кредиту в місяцях");
 	}
 
-	@Override
-	public void ShowPaymentGrid() {
-		System.out.println("С!тка таблиц!");
+	public void ActionMessage() {
+		System.out.println("Введіть номер дії: \n1 - видача нового редиту; \n2 - погашення кредиту");
 	}
+
+	public void ShowPaymentGridMessage() {
+		System.out.println("Сітка таблиці");
+	}
+
+    public void creditRepaymentSchemeMessage() {
+		System.out.println("Введіть номер схеми погашення кредиту: \n1 - ануітет; \n2 - відсотки на залишок");
+	}
+
+    public void amountPaymentMessage() {
+        System.out.println("Введіть суму платежа");
+    }
 
 }

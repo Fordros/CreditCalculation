@@ -17,7 +17,9 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-
+/**
+ * Сущность платежа.
+ */
 
 
 @Entity
