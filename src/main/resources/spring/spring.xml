@@ -11,7 +11,13 @@
 
     <!-- Auto scan the components -->
   <context:component-scan base-package="net.riverSoft" />
-  
- 
+
+<bean id="creditLogic" class="net.riverSoft.CreditLogicImpl">
+    <property name="visual" ref="visualRu"/>
+</bean>
+
+	<bean id="visualEn" class="net.riverSoft.model.visual.impl.VisualEn"/>
+	<bean id="visualRu" class="net.riverSoft.model.visual.impl.VisualRu"/>
+	<bean id="visualUa" class="net.riverSoft.model.visual.impl.VisualUa"/>
   
 </beans>

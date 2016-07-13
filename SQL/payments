@@ -9,3 +9,4 @@ CREATE TABLE public.payments
       REFERENCES public.credit (id_credit) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
+
